@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NCPBanAddition:jar">
+    <output-path>$PROJECT_DIR$/../Server/plugins</output-path>
+    <root id="archive" name="NCPBanAddition.jar">
+      <element id="module-output" name="NCPBanAddition" />
+    </root>
+  </artifact>
+</component>

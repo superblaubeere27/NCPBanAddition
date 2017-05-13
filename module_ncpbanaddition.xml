@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ncpbanaddition" default="compile.module.ncpbanaddition">
+    <dirname property="module.ncpbanaddition.basedir" file="${ant.file.module_ncpbanaddition}"/>
+
+    <property name="module.jdk.home.ncpbanaddition" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.ncpbanaddition" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.ncpbanaddition" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.ncpbanaddition" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+
+    <property name="ncpbanaddition.output.dir" value="${module.ncpbanaddition.basedir}/out/production/NCPBanAddition"/>
+    <property name="ncpbanaddition.testoutput.dir" value="${module.ncpbanaddition.basedir}/out/test/NCPBanAddition"/>
+
+    <path id="ncpbanaddition.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="ncpbanaddition.module.production.classpath">
+        <path refid="${module.jdk.classpath.ncpbanaddition}"/>
+        <path refid="library.nocheatplus.classpath"/>
+    </path>
+
+    <path id="ncpbanaddition.runtime.production.module.classpath">
+        <pathelement location="${ncpbanaddition.output.dir}"/>
+        <path refid="library.nocheatplus.classpath"/>
+    </path>
+
+    <path id="ncpbanaddition.module.classpath">
+        <path refid="${module.jdk.classpath.ncpbanaddition}"/>
+        <pathelement location="${ncpbanaddition.output.dir}"/>
+        <path refid="library.nocheatplus.classpath"/>
+    </path>
+
+    <path id="ncpbanaddition.runtime.module.classpath">
+        <pathelement location="${ncpbanaddition.testoutput.dir}"/>
+        <pathelement location="${ncpbanaddition.output.dir}"/>
+        <path refid="library.nocheatplus.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.ncpbanaddition">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.ncpbanaddition">
+        <patternset refid="excluded.from.module.ncpbanaddition"/>
+    </patternset>
+
+    <path id="ncpbanaddition.module.sourcepath">
+        <dirset dir="${module.ncpbanaddition.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.ncpbanaddition"
+            depends="compile.module.ncpbanaddition.production,compile.module.ncpbanaddition.tests"
+            description="Compile module NCPBanAddition"/>
+
+    <target name="compile.module.ncpbanaddition.production" depends="register.custom.compilers"
+            description="Compile module NCPBanAddition; production classes">
+        <mkdir dir="${ncpbanaddition.output.dir}"/>
+        <javac2 destdir="${ncpbanaddition.output.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.ncpbanaddition}/javac">
+            <compilerarg line="${compiler.args.ncpbanaddition}"/>
+            <bootclasspath refid="ncpbanaddition.module.bootclasspath"/>
+            <classpath refid="ncpbanaddition.module.production.classpath"/>
+            <src refid="ncpbanaddition.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.ncpbanaddition"/>
+        </javac2>
+
+        <copy todir="${ncpbanaddition.output.dir}">
+            <fileset dir="${module.ncpbanaddition.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.ncpbanaddition.tests"
+            depends="register.custom.compilers,compile.module.ncpbanaddition.production"
+            description="compile module NCPBanAddition; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.ncpbanaddition" description="cleanup module">
+        <delete dir="${ncpbanaddition.output.dir}"/>
+        <delete dir="${ncpbanaddition.testoutput.dir}"/>
+    </target>
+</project>

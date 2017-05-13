@@ -1,0 +1,5 @@
+main: me.superblaubeere27.ncpbanaddition.NCPBanAddition
+name: NCPBanAddition
+version: 1.0
+author: superblaubeere27
+depend: [NoCheatPlus]
